@@ -8,7 +8,12 @@ This web app is a personal carbon usage logger. Features include:
  - In-browser local storage for session saving
  - User profiles for personalized logging
 
- ## Installation
+## Installation
  1. Ensure you have [bun](https://bun.sh) installed
  2. Run `bun install` from the project root
  3. Run `bun run dev` to start the server
+
+## Wireframe diagrams:
+![Dashboard](wireframes/Dashboard.svg?sanitize=true)
+![Add Modal](wireframes/AddModal.svg?sanitize=true)
+![Resources](wireframes/Resources.svg?sanitize=true)
