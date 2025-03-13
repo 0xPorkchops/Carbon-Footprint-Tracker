@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BookOpen, LayoutDashboard } from "lucide-react";
+import { useState } from "react";
 
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -14,15 +14,35 @@ import {
   SidebarGroup,
 } from "@/components/ui/sidebar";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-};
+import {
+  ChevronUp,
+  Settings,
+} from "lucide-react"
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { getInitials } from "@/lib/utils";
+
+const profiles = [
+  { id: 1, name: "Shakira", avatar: "/placeholder.svg?height=40&width=40" },
+  { id: 2, name: "Kali Uchis", avatar: "/placeholder.svg?height=40&width=40" },
+  { id: 3, name: "Bad Bunny", avatar: "/placeholder.svg?height=40&width=40"},
+]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [activeProfile, setActiveProfile] = useState(profiles[0])
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -38,7 +58,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <img src="./dino.svg" alt="Dino" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Carbon Rex</span>
+                  <span className="truncate font-semibold text-lg">Carbon Rex</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -68,7 +88,53 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={activeProfile.avatar} alt={activeProfile.name} />
+                    <AvatarFallback className="rounded-lg">{getInitials(activeProfile.name)}</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{activeProfile.name}</span>
+                  </div>
+                  <ChevronUp className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                side={"bottom"}
+                align="end"
+                sideOffset={4}
+              >
+                <DropdownMenuGroup>
+                  {profiles.map((profile) => (
+                    <DropdownMenuItem key={profile.id} onClick={() => setActiveProfile(profile)}>
+                      <Avatar className="h-8 w-8 rounded-lg">
+                        <AvatarImage src={profile.avatar} alt={profile.name} />
+                        <AvatarFallback className="rounded-lg">{getInitials(profile.name)}</AvatarFallback>
+                      </Avatar>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-medium">{profile.name}</span>
+                        <span className="truncate text-xs text-muted-foreground">{profile.id === activeProfile.id ? "Active" : ""}</span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Settings />
+                  Manage Profiles
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
