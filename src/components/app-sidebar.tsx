@@ -1,6 +1,5 @@
 import * as React from "react";
 import { BookOpen, LayoutDashboard } from "lucide-react";
-import { useState } from "react";
 
 import {
   Sidebar,
@@ -15,15 +14,13 @@ import {
 } from "@/components/ui/sidebar";
 
 import {
-  ChevronUp,
-  Settings,
-} from "lucide-react"
+  Dialog,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { ChevronUp, Settings } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,17 +28,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { getInitials } from "@/lib/utils";
+} from "@/components/ui/dropdown-menu";
 
-const profiles = [
-  { id: 1, name: "Shakira", avatar: "/placeholder.svg?height=40&width=40" },
-  { id: 2, name: "Kali Uchis", avatar: "/placeholder.svg?height=40&width=40" },
-  { id: 3, name: "Bad Bunny", avatar: "/placeholder.svg?height=40&width=40"},
-]
+import { getInitials } from "@/lib/utils";
+import { ProfileDialogContent } from "@/components/profile-dialog-content";
+import { useUserContext } from "@/components/user-context";
+import { Button } from "./ui/button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [activeProfile, setActiveProfile] = useState(profiles[0])
+  const { users, activeUser, setActiveUser } = useUserContext();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -58,7 +53,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <img src="./dino.svg" alt="Dino" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold text-lg">Carbon Rex</span>
+                  <span className="truncate font-semibold text-lg">
+                    Carbon Rex
+                  </span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -90,6 +87,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
+            {activeUser ?
+            (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
@@ -97,11 +96,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={activeProfile.avatar} alt={activeProfile.name} />
-                    <AvatarFallback className="rounded-lg">{getInitials(activeProfile.name)}</AvatarFallback>
+                    <AvatarImage
+                      src={activeUser.avatar}
+                      alt={activeUser.name}
+                    />
+                    <AvatarFallback className="rounded-lg">
+                      {getInitials(activeUser.name)}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{activeProfile.name}</span>
+                    <span className="truncate font-medium">
+                      {activeUser.name}
+                    </span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -113,26 +119,49 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 sideOffset={4}
               >
                 <DropdownMenuGroup>
-                  {profiles.map((profile) => (
-                    <DropdownMenuItem key={profile.id} onClick={() => setActiveProfile(profile)}>
+                  {users.map((user) => (
+                    <DropdownMenuItem
+                      key={user.id}
+                      onClick={() => setActiveUser(user)}
+                    >
                       <Avatar className="h-8 w-8 rounded-lg">
-                        <AvatarImage src={profile.avatar} alt={profile.name} />
-                        <AvatarFallback className="rounded-lg">{getInitials(profile.name)}</AvatarFallback>
+                        <AvatarImage src={user.avatar} alt={user.name} />
+                        <AvatarFallback className="rounded-lg">
+                          {getInitials(user.name)}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-medium">{profile.name}</span>
-                        <span className="truncate text-xs text-muted-foreground">{profile.id === activeProfile.id ? "Active" : ""}</span>
+                        <span className="truncate font-medium">
+                          {user.name}
+                        </span>
+                        <span className="truncate text-xs text-muted-foreground">
+                          {user.id === activeUser.id ? "Active" : ""}
+                        </span>
                       </div>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Settings />
-                  Manage Profiles
-                </DropdownMenuItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem
+                      onSelect={(e) => {
+                        e.preventDefault();
+                      }}
+                    >
+                      <Settings />
+                      Manage Profile
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                  <ProfileDialogContent />
+                </Dialog>
               </DropdownMenuContent>
             </DropdownMenu>
+            ) : (
+            <SidebarMenuButton asChild>
+              <Button>Create Profile</Button>
+            </SidebarMenuButton>
+          )}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
