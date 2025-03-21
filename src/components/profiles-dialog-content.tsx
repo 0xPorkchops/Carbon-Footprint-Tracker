@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function ProfileDialogContent() {
+export function ProfilesDialogContent() {
   const { activeUser, updateUser, deleteUser } = useUserContext();
   const [editName, setEditName] = useState(activeUser?.name || "");
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
@@ -33,7 +33,7 @@ export function ProfileDialogContent() {
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Manage Profile</DialogTitle>
+        <DialogTitle>Manage Profiles</DialogTitle>
       </DialogHeader>
       <Label htmlFor="name">Change Name</Label>
       <div className="flex items-center gap-2">
