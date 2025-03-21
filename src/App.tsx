@@ -8,10 +8,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserProvider } from '@/components/user-context';
+import Dashboard from "@/Dashboard";
 
 export default function App() {
   return (
-    <UserProvider>  
+    <UserProvider>
       <SidebarProvider>
         <AppSidebar variant="floating" />
         <div className="flex flex-col flex-1">
@@ -29,6 +30,7 @@ export default function App() {
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <Dashboard />
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">
               <div className="aspect-video rounded-xl bg-muted/50" />
               <div className="aspect-video rounded-xl bg-muted/50" />

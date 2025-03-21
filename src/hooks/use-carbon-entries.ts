@@ -17,8 +17,32 @@ export interface CarbonEntry {
   emission: number;
 }
 
+const initialEntries: CarbonEntry[] = [
+  {
+    id: '1',
+    date: '2022-01-01',
+    category: Category.Food,
+    activity: 'Eating a burger',
+    emission: 0.5
+  },
+  {
+    id: '2',
+    date: '2022-01-02',
+    category: Category.Transportation,
+    activity: 'Driving a car',
+    emission: 2.0
+  },
+  {
+    id: '3',
+    date: '2022-01-03',
+    category: Category.Energy,
+    activity: 'Using a computer',
+    emission: 0.1
+  }
+];
+
 export function useCarbonEntries() {
-  const [entries, setEntries] = useState<CarbonEntry[]>([]);
+  const [entries, setEntries] = useState<CarbonEntry[]>(initialEntries);
 
   // Create
   const createEntry = (category: Category, activity: string, emission: number): CarbonEntry => {
@@ -67,8 +91,9 @@ export function useCarbonEntries() {
   // Delete
   const deleteEntry = (id: string): boolean => {
     const initialLength = entries.length;
-    setEntries(prevEntries => prevEntries.filter(entry => entry.id !== id));
-    return entries.length < initialLength;
+    const newEntries = entries.filter(entry => entry.id !== id);
+    setEntries(newEntries);
+    return newEntries.length < initialLength;
   };
 
   return {
