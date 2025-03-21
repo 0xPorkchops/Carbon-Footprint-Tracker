@@ -10,6 +10,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { UpdateDialogContent } from "./update-dialog-content"
 
 interface ActionCellProps {
   entry: CarbonEntry;
@@ -26,7 +28,12 @@ const ActionCell = ({ entry, onDelete }: ActionCellProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => ""}>Edit</DropdownMenuItem>
+        <Dialog>
+          <DialogTrigger asChild>
+            <DropdownMenuItem onSelect={(e) => {e.preventDefault();}}>Update</DropdownMenuItem>
+          </DialogTrigger>
+          <UpdateDialogContent />
+        </Dialog>
         <DropdownMenuItem onClick={() => onDelete(entry.id)}>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
