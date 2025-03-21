@@ -1,16 +1,15 @@
 import { createColumns } from "@/components/table/columns"
 import { DataTable } from "@/components/table/data-table"
-import { CarbonEntry, useCarbonEntries } from "@/hooks/use-carbon-entries"
+import { useUserContext } from "@/components/user-context";
 
 export default function DemoPage() {
-  const carbonEntriesHook = useCarbonEntries();
-  const data: CarbonEntry[] = carbonEntriesHook.getAllEntries();
-  
-  const columns = createColumns(carbonEntriesHook.deleteEntry);
+  const { getAllEntries, deleteEntry } = useUserContext();
+  const carbonEntries = getAllEntries();
+  const columns = createColumns(deleteEntry);
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={carbonEntries} />
     </div>
   )
 }
