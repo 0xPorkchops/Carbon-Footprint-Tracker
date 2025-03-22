@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function ProfilesDialogContent() {
+export function ProfileDialogContent() {
   const { activeUser, updateUser, deleteUser } = useUserContext();
   const [editName, setEditName] = useState(activeUser?.name || "");
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
