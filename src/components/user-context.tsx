@@ -92,21 +92,21 @@ const testUsers: User[] = [
     carbonEntries: [
       {
         id: '4',
-        date: '2022-01-01',
+        date: '2023-01-01',
         category: Category.Waste,
         activity: 'Recycling plastic',
         emission: 2.0
       },
       {
         id: '5',
-        date: '2022-01-02',
+        date: '2023-01-02',
         category: Category.Water,
         activity: 'Taking a shower',
         emission: 0.3
       },
       {
         id: '6',
-        date: '2022-01-03',
+        date: '2023-01-03',
         category: Category.Other,
         activity: 'Planting a tree',
         emission: 1.0

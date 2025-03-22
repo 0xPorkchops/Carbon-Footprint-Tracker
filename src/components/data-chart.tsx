@@ -32,7 +32,7 @@ export function DataChart() {
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
+          tickFormatter={(date) => new Date(date + "T00:00:00").toLocaleDateString()} // The + "T00:00:00" is necessary for correct timezone interpretation
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
