@@ -34,7 +34,7 @@ export function UpdateProfileDialogContent() {
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Manage Profiles</DialogTitle>
+        <DialogTitle>Manage Profile</DialogTitle>
       </DialogHeader>
       <Label htmlFor="name">Change Name</Label>
       <div className="flex items-center gap-2">
