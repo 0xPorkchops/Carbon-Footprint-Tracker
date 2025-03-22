@@ -56,66 +56,7 @@ const UserContext = createContext<UserContextType>({
   calculateTotalEmissions: () => 0
 });
 
-const testUsers: User[] = [
-  {
-    id: 1,
-    name: 'Yeri Mua',
-    avatar: 'AVATAR_URL_HERE',
-    carbonEntries: [
-      {
-        id: '1',
-        date: '2022-01-01',
-        category: Category.Food,
-        activity: 'Eating a burger',
-        emission: 0.5
-      },
-      {
-        id: '2',
-        date: '2022-01-02',
-        category: Category.Transportation,
-        activity: 'Driving a car',
-        emission: 2.0
-      },
-      {
-        id: '3',
-        date: '2022-01-03',
-        category: Category.Energy,
-        activity: 'Using a computer',
-        emission: 0.1
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Peso Pluma',
-    avatar: 'AVATAR_URL_HERE',
-    carbonEntries: [
-      {
-        id: '4',
-        date: '2023-01-01',
-        category: Category.Waste,
-        activity: 'Recycling plastic',
-        emission: 2.0
-      },
-      {
-        id: '5',
-        date: '2023-01-02',
-        category: Category.Water,
-        activity: 'Taking a shower',
-        emission: 0.3
-      },
-      {
-        id: '6',
-        date: '2023-01-03',
-        category: Category.Other,
-        activity: 'Planting a tree',
-        emission: 1.0
-      }
-    ]
-  }
-];
-
-export const UserProvider = ({ children, initialUsers = testUsers }: { children: ReactNode, initialUsers?: User[] }) => {
+export const UserProvider = ({ children, initialUsers = [] }: { children: ReactNode, initialUsers?: User[] }) => {
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [activeUser, setActiveUser] = useState<User | null>(users.length > 0 ? users[0] : null);
 
