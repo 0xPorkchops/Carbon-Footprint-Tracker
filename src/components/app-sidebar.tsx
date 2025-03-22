@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BookOpen, LayoutDashboard } from "lucide-react";
+import { BookOpen, LayoutDashboard, UserPlus } from "lucide-react";
 
 import {
   Sidebar,
@@ -32,6 +32,7 @@ import {
 
 import { getInitials } from "@/lib/utils";
 import { UpdateProfileDialogContent } from "@/components/dialogs/update-profile-dialog-content";
+import { AddProfileDialogContent } from "@/components/dialogs/add-profile-dialog-content";
 import { useUserContext } from "@/components/user-context";
 import { Button } from "./ui/button";
 
@@ -89,81 +90,98 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            {activeUser ?
-            (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            {activeUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuButton
+                    size="lg"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  >
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage
+                        src={activeUser.avatar}
+                        alt={activeUser.name}
+                      />
+                      <AvatarFallback className="rounded-lg">
+                        {getInitials(activeUser.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-medium">
+                        {activeUser.name}
+                      </span>
+                    </div>
+                    <ChevronUp className="ml-auto size-4" />
+                  </SidebarMenuButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                  side={"bottom"}
+                  align="end"
+                  sideOffset={4}
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src={activeUser.avatar}
-                      alt={activeUser.name}
-                    />
-                    <AvatarFallback className="rounded-lg">
-                      {getInitials(activeUser.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">
-                      {activeUser.name}
-                    </span>
-                  </div>
-                  <ChevronUp className="ml-auto size-4" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                side={"bottom"}
-                align="end"
-                sideOffset={4}
-              >
-                <DropdownMenuGroup>
-                  {users.map((user) => (
-                    <DropdownMenuItem
-                      key={user.id}
-                      onClick={() => setActiveUser(user)}
-                    >
-                      <Avatar className="h-8 w-8 rounded-lg">
-                        <AvatarImage src={user.avatar} alt={user.name} />
-                        <AvatarFallback className="rounded-lg">
-                          {getInitials(user.name)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-medium">
-                          {user.name}
-                        </span>
-                        <span className="truncate text-xs text-muted-foreground">
-                          {user.id === activeUser.id ? "Active" : ""}
-                        </span>
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <DropdownMenuItem
-                      onSelect={(e) => {
-                        e.preventDefault();
-                      }}
-                    >
-                      <Settings />
-                      Manage Profiles
-                    </DropdownMenuItem>
-                  </DialogTrigger>
-                  <UpdateProfileDialogContent />
-                </Dialog>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <DropdownMenuGroup>
+                    {users.map((user) => (
+                      <DropdownMenuItem
+                        key={user.id}
+                        onClick={() => setActiveUser(user)}
+                      >
+                        <Avatar className="h-8 w-8 rounded-lg">
+                          <AvatarImage src={user.avatar} alt={user.name} />
+                          <AvatarFallback className="rounded-lg">
+                            {getInitials(user.name)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                          <span className="truncate font-medium">
+                            {user.name}
+                          </span>
+                          <span className="truncate text-xs text-muted-foreground">
+                            {user.id === activeUser.id ? "Active" : ""}
+                          </span>
+                        </div>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <DropdownMenuItem
+                        onSelect={(e) => {
+                          e.preventDefault();
+                        }}
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        Add New Profile
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <AddProfileDialogContent />
+                  </Dialog>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <DropdownMenuItem
+                        onSelect={(e) => {
+                          e.preventDefault();
+                        }}
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        Manage Profile
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <UpdateProfileDialogContent />
+                  </Dialog>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
-            <SidebarMenuButton asChild>
-              <Button>Create Profile</Button>
-            </SidebarMenuButton>
-          )}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <SidebarMenuButton asChild>
+                    <Button>Create Profile</Button>
+                  </SidebarMenuButton>
+                </DialogTrigger>
+                <AddProfileDialogContent />
+              </Dialog>
+            )}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
