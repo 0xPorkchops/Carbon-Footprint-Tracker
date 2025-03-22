@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { getInitials } from "@/lib/utils";
-import { ProfilesDialogContent } from "@/components/profiles-dialog-content";
+import { ProfilesDialogContent } from "@/components/dialogs/profiles-dialog-content";
 import { useUserContext } from "@/components/user-context";
 import { Button } from "./ui/button";
 

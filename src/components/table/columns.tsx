@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { CarbonEntry } from "@/hooks/use-carbon-entries"
+import { CarbonEntry } from "@/components/user-context"
 import { MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import { UpdateDialogContent } from "./update-dialog-content"
+import { UpdateDialogContent } from "@/components/dialogs/update-dialog-content"
 
 interface ActionCellProps {
   entry: CarbonEntry;
