@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useUserContext } from "@/components/user-context";
+import { Category, useUserContext } from "@/components/user-context";
 
 import {
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -12,17 +13,17 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Combobox } from "@/components/ui/combobox";
 
 export function AddDialogContent() {
-  const { activeUser, updateUser } = useUserContext();
+  const { activeUser, createEntry } = useUserContext();
   const [activity, setActivity] = useState("");
   const [category, setCategory] = useState("");
   const [emission, setEmission] = useState("");
-  const [date, setDate] = useState("");
   
-  const handleSaveEntry = () => {
+  const handleAddEntry = () => {
     if (activeUser) {
-      updateUser({ ...activeUser, name: activity });
+      createEntry(category as Category, activity, parseFloat(emission));
     }
   };
 
@@ -44,13 +45,7 @@ export function AddDialogContent() {
       <Separator />
       <Label htmlFor="category">Category</Label>
       <div className="flex items-center gap-2">
-        <Input
-          id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="flex-1"
-          placeholder="Category"
-        />
+        <Combobox type="category" elements={Object.values(Category)} onChange={setCategory} />
       </div>
       <Separator />
       <Label htmlFor="emission">Emission</Label>
@@ -63,19 +58,10 @@ export function AddDialogContent() {
           placeholder="Emission"
         />
       </div>
-      <Separator />
-      <Label htmlFor="date">Date</Label>
-      <div className="flex items-center gap-2">
-        <Input
-          id="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="flex-1"
-          placeholder="Date"
-        />
-      </div>
       <DialogFooter>
-        <Button onClick={handleSaveEntry}>Add</Button>
+        <DialogClose asChild>
+          <Button onClick={handleAddEntry}>Add</Button>
+        </DialogClose>
       </DialogFooter>
     </DialogContent>
   );

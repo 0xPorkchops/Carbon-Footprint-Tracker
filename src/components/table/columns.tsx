@@ -32,7 +32,7 @@ const ActionCell = ({ entry, onDelete }: ActionCellProps) => {
           <DialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => {e.preventDefault();}}>Update</DropdownMenuItem>
           </DialogTrigger>
-          <UpdateDialogContent />
+          <UpdateDialogContent entryId={entry.id} />
         </Dialog>
         <DropdownMenuItem onClick={() => onDelete(entry.id)}>Delete</DropdownMenuItem>
       </DropdownMenuContent>
