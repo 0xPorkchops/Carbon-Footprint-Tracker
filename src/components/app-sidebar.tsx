@@ -35,6 +35,8 @@ import { ProfilesDialogContent } from "@/components/dialogs/profiles-dialog-cont
 import { useUserContext } from "@/components/user-context";
 import { Button } from "./ui/button";
 
+import { Link } from "react-router-dom";
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { users, activeUser, setActiveUser } = useUserContext();
 
@@ -67,18 +69,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a href="#">
+                <Link to="/">
                   <LayoutDashboard />
                   Dashboard
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a href="#">
+                <Link to="/resources">
                   <BookOpen />
                   Resources
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { AddDialogContent } from "@/components/dialogs/add-dialog-content";
 
-export default function DemoPage() {
+export default function Dashboard() {
   const { getAllEntries, deleteEntry } = useUserContext();
   const carbonEntries = getAllEntries();
   const columns = createColumns(deleteEntry);
