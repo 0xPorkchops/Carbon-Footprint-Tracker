@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUserContext } from "@/components/user-context";
 
 import {
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -68,13 +69,15 @@ export function ProfilesDialogContent() {
           className="flex-1"
           placeholder="DELETE"
         />
-        <Button
-          variant="destructive"
-          onClick={handleDeleteAccount}
-          disabled={deleteConfirmation !== "DELETE"}
-        >
-          Delete Profile
-        </Button>
+        <DialogClose asChild>
+          <Button
+            variant="destructive"
+            onClick={handleDeleteAccount}
+            disabled={deleteConfirmation !== "DELETE"}
+          >
+            Delete Profile
+          </Button>
+        </DialogClose>
       </div>
     </DialogContent>
   );
