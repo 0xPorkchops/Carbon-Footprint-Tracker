@@ -1,5 +1,5 @@
-import { createColumns } from "@/components/table/columns";
-import { DataTable } from "@/components/table/data-table";
+import { createColumns } from "@/components/columns";
+import { DataTable } from "@/components/data-table";
 import { useUserContext } from "@/components/user-context";
 import { DataChart } from "@/components/data-chart";
 import { Button } from "@/components/ui/button";
