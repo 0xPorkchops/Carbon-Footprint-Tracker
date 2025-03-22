@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { getInitials } from "@/lib/utils";
-import { ProfileDialogContent } from "@/components/dialogs/profile-dialog-content";
+import { UpdateProfileDialogContent } from "@/components/dialogs/update-profile-dialog-content";
 import { useUserContext } from "@/components/user-context";
 import { Button } from "./ui/button";
 
@@ -155,7 +155,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       Manage Profiles
                     </DropdownMenuItem>
                   </DialogTrigger>
-                  <ProfileDialogContent />
+                  <UpdateProfileDialogContent />
                 </Dialog>
               </DropdownMenuContent>
             </DropdownMenu>
