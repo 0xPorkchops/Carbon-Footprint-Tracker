@@ -104,7 +104,7 @@ export function UpdateDialogContent({ entryId }: UpdateDialogContentProps) {
           value={emission}
           onChange={(e) => handleEmissionChange(e.target.value)}
           className="flex-1"
-          placeholder="Emission"
+          placeholder="0.00"
           type="number"
           step="0.01"
           min="0"

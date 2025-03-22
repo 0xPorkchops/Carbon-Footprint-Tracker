@@ -20,7 +20,32 @@ export function AddDialogContent() {
   const [activity, setActivity] = useState("");
   const [category, setCategory] = useState("");
   const [emission, setEmission] = useState("");
-  
+  const [emissionError, setEmissionError] = useState("");
+
+  const handleEmissionChange = (value: string) => {
+    // There seems to be better uncontrolled ways of validating numeric input, but this will do for now
+    if (value === "") {
+      setEmission("");
+      setEmissionError("Emission is required");
+      return;
+    }
+    
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) {
+      setEmissionError("Please enter a valid number");
+      return;
+    }
+    
+    if (numValue < 0) {
+      setEmissionError("Emission must be greater than or equal to 0");
+      return;
+    }
+    
+    const formattedValue = parseFloat(numValue.toFixed(2)).toString();
+    setEmission(formattedValue);
+    setEmissionError("");
+  };
+
   const handleAddEntry = () => {
     if (activeUser) {
       createEntry(category as Category, activity, parseFloat(emission));
@@ -45,7 +70,11 @@ export function AddDialogContent() {
       <Separator />
       <Label htmlFor="category">Category</Label>
       <div className="flex items-center gap-2">
-        <Combobox type="category" elements={Object.values(Category)} onChange={setCategory} />
+        <Combobox
+          type="category"
+          elements={Object.values(Category) as string[]}
+          onChange={(value: string) => setCategory(value)}
+        />
       </div>
       <Separator />
       <Label htmlFor="emission">Emission</Label>
@@ -53,10 +82,16 @@ export function AddDialogContent() {
         <Input
           id="emission"
           value={emission}
-          onChange={(e) => setEmission(e.target.value)}
+          onChange={(e) => handleEmissionChange(e.target.value)}
           className="flex-1"
-          placeholder="Emission"
+          placeholder="0.00"
+          type="number"
+          step="0.01"
+          min="0"
         />
+        {emissionError && (
+          <p className="text-sm text-red-500">{emissionError}</p>
+        )}
       </div>
       <DialogFooter>
         <DialogClose asChild>
